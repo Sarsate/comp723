@@ -1,3 +1,21 @@
+(*
+ * PSTACK: Priority Stack
+ *
+ * A stack where elements have an associate priority.
+ * Elements are ordered such that the highest priority
+ * element is at the top of the stack
+ *
+ *
+ *
+ * new:   int -> PSTACK
+ * empty: PSTACK -> bool
+ * size:  PSTACK -> int
+ * topp:  PSTACK -> int
+ * topv:  PSTACK -> int
+ * pop:   PSTACK -> PSTACK
+
+*)
+
 datatype PSTACK=
   New of int
   | push of PSTACK * int * int

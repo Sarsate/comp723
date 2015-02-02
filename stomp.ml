@@ -1,3 +1,22 @@
+(*
+ * STOMP: Stomp Stack
+ *
+ * A bounded stack. When the stack is full, the element at
+ * the bottom of the stack is stomped out to make room for
+ * the new one.
+ *
+ *
+ *
+ * new:   int -> STOMP
+ * empty: STOMP -> bool
+ * max:   STOMP -> int
+ * size:  STOMP -> int
+ * full:  STOMP -> bool
+ * top:   STOMP -> int
+ * pop:   STOMP -> STOMP
+
+*)
+
 datatype STOMP =
   New of int
   | push of STOMP * int

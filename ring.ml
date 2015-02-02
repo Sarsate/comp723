@@ -1,3 +1,23 @@
+(*
+ * RING: circular queue structure.
+ *
+ * This is a bounded queue, but when elements added
+ * when the queue is full, it overwrites the oldest element.
+ *
+ *
+ * new:   int -> RING
+ * empty: RING -> bool
+ * max:   RING -> bool
+ * size:  RING -> int
+ * full:  RING -> bool
+ * rem:   RING -> RING
+ * front: RING -> int
+
+*)
+
+
+
+
 datatype RING =
   New of int
   | add of RING * int
