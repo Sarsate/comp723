@@ -1,6 +1,3 @@
-use("set.ml");
-use("deque.ml");
-
 (*
    LIB  (library)
 
