@@ -57,5 +57,6 @@ to mine.
 
 7) Can everyone be suspended? Can a tyrannical moderator make it so nobody can do anything?
 
+  EF(~Pspeak & ~Plisten & ~Ppool) (Expect TRUE)
   EF(~Pspeak & ~Plisten & ~Ppool -> Pmoderate) (Expect TRUE)
 
