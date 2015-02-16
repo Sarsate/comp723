@@ -1,0 +1,10 @@
+1.) There can never be 2 philosophers eating at the same time
+  EF((P1eat & P2eat) | (P2eat & P3eat) | ( P1eat & P3eat)). = FALSE
+2.) An all paths, it globally holds that if one philosopher is eating, the other two are not:
+  AG((P1eat -> ~P2eat & ~P3eat) & (P2eat -> ~P1eat & ~P3eat) & (P3eat -> (~P1eat & ~P2eat))). = TRUE.
+3.) A philosopher can be starved:
+  AG(~T1grabfork -> AX(EF(~T1grabfork))). = TRUE
+4.) A philosopher can horde the forks( never release ).
+  AG(T1grabfork -> AX(AF(~T1releasefork))). = TRUE
+5.) There is a path where  Philosophers can always think and never eat:
+EF(P1think & P2think & P3think -> AX(AF(P1think & P2think & P3think))). = TRUE

@@ -1,0 +1,61 @@
+
+Here are the CTL formulae on which I want to see your model checker 
+operate.  You will have to convert them into the input format 
+your program expects.  
+
+The handin material should show the converted formula and the output
+from your checker execution.
+
+You should also make up 3 formulae of your own to test in addition
+to mine.
+
+
+1) Can more than one person be speaking at one time?
+
+   This cannot be directly encoded, as the model I have made does
+   not indicate anything about how many tokens are in a marked place,
+   but only that at least one token is there.  So let's rephrase it
+   a bit and ask a similar, but technically different, question:
+
+   Can a listener ever get the floor when someone is already speaking?
+
+      1a.   EF (Pspeak & TgetFloor)   (expect "FALSE")
+      1b.   AG (Pspeak -> ~TgetFloor) & AG (TgetFloor -> ~Pspeak)
+              (expect "TRUE")
+
+   Test both ways of expressing this idea.
+
+2) The meeting is always moderated, except when someone is on hold.
+
+   The truth of this one depends on how you interpret "except".
+   Since the protocol is flawed allows one to get stuck on hold
+   (see 3), if we say "moderated, but NOT moderated when on hold"
+   we would get false.  So we will say it this way: 
+
+   If the meeting is ever unmoderated, then someone is on hold.
+
+      2.  AG (~Pmoderate -> Phold)   (expect "TRUE")
+
+3) Is it possible for a speaker to get "stuck" on hold?
+  
+      3.  AG (Phold -> AX(AF(~Phold)))  (expect "FALSE")
+
+   We expect "FALSE" since this protocol is flawed
+
+
+4) A moderator must be present to add or delete listeners:
+  EF(~Pmoderate & (Taddp | Tdelp)) (expect FALSE)
+
+5) No one can be suspended indefinitely:
+  EF(Tsusp -> AX(AF(Tresp))) (expect TRUE)
+
+ If someone is suspended, then eventually they are restored.
+
+6) If there are no listeners, then there are people in the pool or they are suspended. (I.E. There are always potential listeners)
+
+  AG(~Plisten -> (Pwait | Ppool)). (Expect TRUE)
+
+7) Can everyone be suspended? Can a tyrannical moderator make it so nobody can do anything?
+
+  EF(~Pspeak & ~Plisten & ~Ppool -> Pmoderate) (Expect TRUE)
+
