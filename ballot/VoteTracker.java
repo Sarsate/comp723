@@ -23,4 +23,9 @@ public class VoteTracker {
 	public int getNo(){
 		return no;
 	}
+	public void reset(){
+		no = 0;
+		yes = 0;
+		
+	}
 }

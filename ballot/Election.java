@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class Election implements Ballot {
 
-	protected ArrayList<Ballot> children;
+	ArrayList<Ballot> children;
 	HashMap<String, VoteTracker> questions;
 	Scanner scanner;
 	public Election()
@@ -19,36 +19,38 @@ public class Election implements Ballot {
 	public void addBallot(Ballot ballot)
 	{
 		children.add(ballot);
-		//need to inherit questions.
+		for(String q : questions.keySet())
+		{
+			ballot.addQuestion(q);
+		}
 	}
-	@Override
-	public void tally() {
+	public HashMap<String, VoteTracker> tally()
+	{
+		HashMap<String, VoteTracker> results = new HashMap<String, VoteTracker>(questions); 
 		for(Ballot child : children)
 		{
-			child.tally();
-		}
-		for(String localQuestion : this.questions.keySet())
+			HashMap<String, VoteTracker> localResults = child.tally();
+			for(String q : localResults.keySet())
 			{
-				if(questions.containsKey(localQuestion))
+				if(results.containsKey(q))
 				{
-					VoteTracker localVotes = this.questions.get(localQuestion);
-					VoteTracker totalVotes = questions.get(localQuestion);
+					VoteTracker localVotes = localResults.get(q);
+					VoteTracker totalVotes = results.get(q);
 					totalVotes.addYes(localVotes.getYes());
-					totalVotes.addNo(localVotes.getNo());
+					totalVotes.addNo(localVotes.getYes());
 				}
 			}
 		}
-		
-		
+		return results;
 		
 	}
-	public void displayResults()
+	public void displayResults(HashMap<String, VoteTracker> map)
 	{
-		for(String question : questions.keySet())
+		for(String question : map.keySet())
 		{
 			System.out.println(question);
-			System.out.println(questions.get(question).getYes());
-			System.out.println(questions.get(question).getNo());
+			System.out.println(map.get(question).getYes());
+			System.out.println(map.get(question).getNo());
 		}
 	}
 	@Override
@@ -74,6 +76,8 @@ public class Election implements Ballot {
 	}
 	@Override
 	public void addQuestion(String question) {
+		if(questions.containsKey(question))
+			return;
 		questions.put(question, new VoteTracker());
 		for(Ballot child : children)
 			child.addQuestion(question);
